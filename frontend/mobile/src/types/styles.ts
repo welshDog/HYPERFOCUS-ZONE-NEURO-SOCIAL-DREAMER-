@@ -6,9 +6,9 @@ export interface TypographyStyle {
     fontWeight: string;
 }
 
-export interface ExtendedTextStyle extends TextStyle {
+export interface ExtendedTextStyle extends Omit<TextStyle, 'fontWeight'> {
     fontSize: number;
-    fontWeight: string;
+    fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
     color: string;
 }
 

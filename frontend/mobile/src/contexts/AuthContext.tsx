@@ -274,7 +274,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
             if (response.success && response.data) {
                 const { user } = response.data as AuthResponse;
-                dispatch({ type: 'LOGIN_SUCCESS', payload: { user } });
+                dispatch({
+                    type: 'LOGIN_SUCCESS', payload: {
+                        user: {
+                            ...user,
+                            createdAt: (user as any).createdAt || new Date().toISOString()
+                        }
+                    }
+                });
 
                 // Update socket auth token
                 await socketService.updateAuthToken();

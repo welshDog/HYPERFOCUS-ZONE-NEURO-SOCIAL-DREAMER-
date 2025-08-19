@@ -102,7 +102,6 @@ const MainNavigator: React.FC = () => {
                 component={FocusWorldStack}
                 options={{
                     tabBarLabel: '🎯 Focus',
-                    tabBarAccessibilityHint: 'Navigate to Focus Worlds for deep work and social browsing',
                 }}
             />
             <Tab.Screen
@@ -110,7 +109,6 @@ const MainNavigator: React.FC = () => {
                 component={InterestHyperspacesScreen}
                 options={{
                     tabBarLabel: '⚡ Interests',
-                    tabBarAccessibilityHint: 'Explore Interest Hyperspaces for special interests and communities',
                 }}
             />
             <Tab.Screen
@@ -118,7 +116,6 @@ const MainNavigator: React.FC = () => {
                 component={CommunityScreen}
                 options={{
                     tabBarLabel: '🤝 Community',
-                    tabBarAccessibilityHint: 'Connect with the neurodivergent community and support networks',
                 }}
             />
             <Tab.Screen
@@ -126,7 +123,6 @@ const MainNavigator: React.FC = () => {
                 component={ProfileScreen}
                 options={{
                     tabBarLabel: '👤 Profile',
-                    tabBarAccessibilityHint: 'View and edit your profile and settings',
                 }}
             />
         </Tab.Navigator>

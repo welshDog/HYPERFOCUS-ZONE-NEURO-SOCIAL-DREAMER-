@@ -13,61 +13,121 @@ export const API_CONFIG = {
     // Request timeout (30 seconds)
     TIMEOUT: 30000,
 
+    // Connection timeout (faster feedback for ADHD users)
+    CONNECTION_TIMEOUT: 10000,
+
     // Retry configuration
-    MAX_RETRIES: 3,
+    RETRY_ATTEMPTS: 3,
     RETRY_DELAY: 1000,
 
-    // File upload limits
-    MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
-
-    // ADHD-friendly settings
-    REQUEST_DEBOUNCE: 300, // ms - prevent rapid-fire requests
-    CONNECTION_TIMEOUT: 10000, // ms - faster feedback for ADHD users
+    // Cache configuration
+    CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
 };
 
 // API Endpoints
 export const API_ENDPOINTS = {
     // Authentication
     AUTH: {
-        REGISTER: '/auth/register',
         LOGIN: '/auth/login',
+        REGISTER: '/auth/register',
         LOGOUT: '/auth/logout',
         REFRESH: '/auth/refresh',
+        PROFILE: '/auth/profile',
         ME: '/auth/me',
         UPDATE_PROFILE: '/auth/profile',
+        DELETE_ACCOUNT: '/auth/account',
+        VERIFY_EMAIL: '/auth/verify-email',
+        RESET_PASSWORD: '/auth/reset-password',
+        CHANGE_PASSWORD: '/auth/change-password',
     },
 
-    // Interest Spaces
+    // User Management
+    USERS: {
+        LIST: '/users',
+        GET: '/users/:id',
+        UPDATE: '/users/:id',
+        SEARCH: '/users/search',
+        FOLLOW: '/users/:id/follow',
+        UNFOLLOW: '/users/:id/unfollow',
+        FOLLOWERS: '/users/:id/followers',
+        FOLLOWING: '/users/:id/following',
+        ACTIVITY: '/users/:id/activity',
+        PREFERENCES: '/users/:id/preferences',
+    },
+
+    // Spaces Management
     SPACES: {
         LIST: '/spaces',
         CREATE: '/spaces',
         GET: (spaceId: string) => `/spaces/${spaceId}`,
+        UPDATE: '/spaces/:id',
+        DELETE: '/spaces/:id',
         JOIN: (spaceId: string) => `/spaces/${spaceId}/join`,
         LEAVE: (spaceId: string) => `/spaces/${spaceId}/leave`,
-        UPDATE_HYPERFOCUS: (spaceId: string) => `/spaces/${spaceId}/hyperfocus`,
         MEMBERS: (spaceId: string) => `/spaces/${spaceId}/members`,
+        UPDATE_HYPERFOCUS: (spaceId: string) => `/spaces/${spaceId}/hyperfocus`,
+        INVITE: '/spaces/:id/invite',
+        SEARCH: '/spaces/search',
+        POPULAR: '/spaces/popular',
+        RECOMMENDED: '/spaces/recommended',
+        MY_SPACES: '/spaces/my-spaces',
     },
 
-    // Focus Sessions (Future endpoints)
+    // Focus Sessions
     FOCUS: {
-        START: '/focus-sessions/start',
-        END: '/focus-sessions/end',
-        HISTORY: '/focus-sessions/history',
-        TEMPLATES: '/focus-sessions/templates',
+        LIST: '/focus/sessions',
+        CREATE: '/focus/sessions',
+        GET: '/focus/sessions/:id',
+        UPDATE: '/focus/sessions/:id',
+        DELETE: '/focus/sessions/:id',
+        JOIN: '/focus/sessions/:id/join',
+        LEAVE: '/focus/sessions/:id/leave',
+        STATS: '/focus/stats',
+        REPORT_DISTRACTION: '/focus/sessions/:id/distraction',
+        REPORT_FLOW_STATE: '/focus/sessions/:id/flow-state',
+        ENERGY_CHECKIN: '/focus/sessions/:id/energy',
+        ANALYTICS: '/focus/analytics',
     },
 
-    // Body Doubling (Future endpoints)
+    // Body Doubling
     BODY_DOUBLING: {
-        REQUEST_PARTNER: '/body-doubling/request',
-        SESSIONS: '/body-doubling/sessions',
-        FEEDBACK: '/body-doubling/feedback',
+        LIST: '/body-doubling/sessions',
+        CREATE: '/body-doubling/sessions',
+        GET: '/body-doubling/sessions/:id',
+        UPDATE: '/body-doubling/sessions/:id',
+        DELETE: '/body-doubling/sessions/:id',
+        JOIN: '/body-doubling/sessions/:id/join',
+        LEAVE: '/body-doubling/sessions/:id/leave',
+        REQUEST_PARTNER: '/body-doubling/request-partner',
+        ACCEPT_PARTNER: '/body-doubling/accept-partner/:id',
+        DECLINE_PARTNER: '/body-doubling/decline-partner/:id',
+        REPORT_TASK: '/body-doubling/sessions/:id/task',
+        CHECK_IN: '/body-doubling/sessions/:id/checkin',
     },
 
-    // Chat (Future endpoints)
+    // Chat & Messaging
     CHAT: {
-        MESSAGES: (spaceId: string) => `/chat/${spaceId}/messages`,
-        SEND: (spaceId: string) => `/chat/${spaceId}/send`,
-        REACTIONS: (messageId: string) => `/chat/messages/${messageId}/reactions`,
+        SPACES: '/chat/spaces/:spaceId/messages',
+        SEND: '/chat/spaces/:spaceId/messages',
+        GET_MESSAGES: '/chat/spaces/:spaceId/messages',
+        EDIT_MESSAGE: '/chat/messages/:messageId',
+        DELETE_MESSAGE: '/chat/messages/:messageId',
+        REACT_MESSAGE: '/chat/messages/:messageId/react',
+        REPORT_MESSAGE: '/chat/messages/:messageId/report',
+        VOICE_MESSAGE: '/chat/spaces/:spaceId/voice',
+        UPLOAD_FILE: '/chat/upload',
+    },
+
+    // Notifications
+    NOTIFICATIONS: {
+        LIST: '/notifications',
+        GET: '/notifications/:id',
+        MARK_READ: '/notifications/:id/read',
+        MARK_ALL_READ: '/notifications/mark-all-read',
+        DELETE: '/notifications/:id',
+        SETTINGS: '/notifications/settings',
+        SUBSCRIBE: '/notifications/subscribe',
+        UNSUBSCRIBE: '/notifications/unsubscribe',
     },
 };
 
@@ -89,13 +149,20 @@ export const SOCKET_EVENTS = {
     FOCUS: {
         START_SESSION: 'start-focus-session',
         END_SESSION: 'end-focus-session',
+        JOIN_SESSION: 'join-focus-session',
+        UPDATE_SESSION: 'update-focus-session',
         REPORT_DISTRACTION: 'report-distraction',
         REPORT_FLOW_STATE: 'report-flow-state',
         ENERGY_CHECKIN: 'energy-checkin',
         SESSION_STARTED: 'focus-session-started',
         SESSION_ENDED: 'focus-session-ended',
+        SESSION_UPDATED: 'focus-session-updated',
+        USER_JOINED: 'focus-user-joined',
+        USER_LEFT: 'focus-user-left',
+        DISTRACTION_ALERT: 'focus-distraction-alert',
+        FLOW_STATE_DETECTED: 'focus-flow-state-detected',
         TIMER_UPDATE: 'timer-update',
-        PHASE_COMPLETED: 'focus-phase-completed',
+        PHASE_COMPLETED: 'phase-completed',
         BREAK_COMPLETED: 'break-completed',
     },
 
@@ -109,51 +176,80 @@ export const SOCKET_EVENTS = {
         DISTRACTION_REPORT: 'distraction-report',
         LEAVE_SESSION: 'leave-session',
         PARTNER_LEFT: 'partner-left',
+        CREATE_SESSION: 'create-body-doubling-session',
+        JOIN_SESSION: 'join-body-doubling-session',
+        SESSION_CREATED: 'body-doubling-session-created',
+        SESSION_UPDATED: 'body-doubling-session-updated',
+        USER_JOINED: 'body-doubling-user-joined',
+        USER_LEFT: 'body-doubling-user-left',
+        TASK_UPDATED: 'body-doubling-task-updated',
+        FOCUS_LEVEL_UPDATED: 'body-doubling-focus-level-updated',
+        UPDATE_TASK: 'update-body-doubling-task',
+        UPDATE_FOCUS_LEVEL: 'update-body-doubling-focus-level',
+        CHECK_IN: 'body-doubling-check-in',
     },
 
     // Chat
     CHAT: {
-        JOIN_SPACE: 'join-space-chat',
+        JOIN_SPACE: 'join-space',
         SEND_MESSAGE: 'send-message',
         NEW_MESSAGE: 'new-message',
+        MESSAGE_RECEIVED: 'message-received',
         TYPING_START: 'typing-start',
         TYPING_STOP: 'typing-stop',
         USER_TYPING: 'user-typing',
+        USER_STOPPED_TYPING: 'user-stopped-typing',
         MESSAGE_REACTION: 'message-reaction',
         VOICE_MESSAGE: 'voice-message',
+        START_TYPING: 'start-typing',
+        STOP_TYPING: 'stop-typing',
+        READABILITY_SCORED: 'readability-scored',
+        VOICE_MESSAGE_PROCESSED: 'voice-message-processed',
+        REQUEST_READABILITY_CHECK: 'request-readability-check',
     },
 
-    // General
-    UPDATE_PRESENCE: 'update-presence',
-    USER_PRESENCE_UPDATE: 'user-presence-update',
+    // General Real-time Events
+    USER_CONNECTED: 'user-connected',
+    USER_DISCONNECTED: 'user-disconnected',
+    SPACE_UPDATED: 'space-updated',
+    NOTIFICATION_RECEIVED: 'notification-received',
+    ERROR: 'error',
+    RECONNECT: 'reconnect',
+    RECONNECT_ERROR: 'reconnect_error',
 };
 
-// Error Types
-export const ERROR_TYPES = {
+// Default headers for API requests
+export const DEFAULT_HEADERS = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+};
+
+// Error codes
+export const ERROR_CODES = {
     NETWORK_ERROR: 'NETWORK_ERROR',
+    TIMEOUT_ERROR: 'TIMEOUT_ERROR',
     AUTH_ERROR: 'AUTH_ERROR',
     VALIDATION_ERROR: 'VALIDATION_ERROR',
     SERVER_ERROR: 'SERVER_ERROR',
-    TIMEOUT_ERROR: 'TIMEOUT_ERROR',
-    RATE_LIMIT_ERROR: 'RATE_LIMIT_ERROR',
+    NOT_FOUND: 'NOT_FOUND',
+    FORBIDDEN: 'FORBIDDEN',
+    RATE_LIMITED: 'RATE_LIMITED',
+    RATE_LIMIT_ERROR: 'RATE_LIMIT_ERROR', // Alias for compatibility
 };
 
-// Success Messages (ADHD-friendly encouragement)
+// Error types (alias for backward compatibility)
+export const ERROR_TYPES = ERROR_CODES;
+
+// Success messages
 export const SUCCESS_MESSAGES = {
-    LOGIN: 'Welcome back! Ready to hyperfocus? 🌟',
-    REGISTER: 'Account created! Your ADHD-friendly workspace awaits! 🎉',
-    SPACE_JOINED: 'You\'re in! Time to connect with your community! 🚀',
-    SPACE_CREATED: 'Space created! You\'re building something amazing! ✨',
-    FOCUS_STARTED: 'Focus mode activated! You\'ve got this! 🧠',
-    PARTNER_MATCHED: 'Accountability partner found! Let\'s work together! 🤝',
-    MESSAGE_SENT: 'Message sent! Great communication! 💬',
-};
-
-export default {
-    API_CONFIG,
-    API_ENDPOINTS,
-    SOCKET_NAMESPACES,
-    SOCKET_EVENTS,
-    ERROR_TYPES,
-    SUCCESS_MESSAGES,
+    LOGIN: 'Successfully logged in! 🎉',
+    REGISTER: 'Account created successfully! Welcome to HyperFocus Zone! 🌟',
+    LOGOUT: 'Logged out successfully. See you soon! 👋',
+    PROFILE_UPDATED: 'Profile updated successfully! ✨',
+    PASSWORD_CHANGED: 'Password changed successfully! 🔒',
+    EMAIL_VERIFIED: 'Email verified successfully! ✅',
+    SESSION_STARTED: 'Focus session started! Let\'s get into the zone! 🎯',
+    SESSION_COMPLETED: 'Great job! Session completed! 🏆',
+    SPACE_JOINED: 'Welcome to the space! 🚀',
+    MESSAGE_SENT: 'Message sent! 💬',
 };

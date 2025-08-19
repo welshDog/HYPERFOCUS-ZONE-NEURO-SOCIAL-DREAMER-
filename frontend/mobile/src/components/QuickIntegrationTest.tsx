@@ -27,9 +27,18 @@ const QuickIntegrationTest: React.FC = () => {
     } = useBackendIntegration();
 
     const [testResults, setTestResults] = useState<string[]>([]);
+    const [currentTest, setCurrentTest] = useState<string>('');
+    const [testProgress, setTestProgress] = useState<number>(0);
+    const [totalTests, setTotalTests] = useState<number>(4);
 
     const addResult = (result: string) => {
         setTestResults(prev => [...prev, `${new Date().toLocaleTimeString()}: ${result}`]);
+    };
+
+    const updateProgress = (current: number, total: number, testName: string) => {
+        setTestProgress(current);
+        setTotalTests(total);
+        setCurrentTest(testName);
     };
 
     const testAuthentication = async () => {
@@ -83,26 +92,31 @@ const QuickIntegrationTest: React.FC = () => {
 
     const runAllTests = async () => {
         setTestResults([]);
+        setTestProgress(0);
         addResult('🚀 Starting comprehensive backend integration test...');
 
-        // Test sequence
+        // Test sequence with progress tracking
+        updateProgress(1, 4, 'Socket Connection');
         testSocketConnection();
         await new Promise(resolve => setTimeout(resolve, 1000));
 
+        updateProgress(2, 4, 'Authentication');
         await testAuthentication();
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         if (isAuthenticated) {
+            updateProgress(3, 4, 'Spaces Management');
             await testSpacesLoad();
             await new Promise(resolve => setTimeout(resolve, 1000));
 
+            updateProgress(4, 4, 'Focus Sessions');
             await testFocusSession();
         }
 
+        updateProgress(4, 4, 'Complete');
+        setCurrentTest('🎉 All tests complete!');
         addResult('🎉 Test sequence complete!');
-    };
-
-    useEffect(() => {
+    }; useEffect(() => {
         addResult('🔗 Backend Integration Test loaded');
     }, []);
 
@@ -124,6 +138,24 @@ const QuickIntegrationTest: React.FC = () => {
                     {isAuthenticated ? '🔐 Authenticated' : '🔒 Not Authenticated'}
                 </Text>
             </View>
+
+            {/* Progress Indicator */}
+            {testProgress > 0 && (
+                <View style={styles.progressContainer}>
+                    <Text style={styles.progressTitle}>🧪 Test Progress</Text>
+                    <View style={styles.progressBar}>
+                        <View
+                            style={[
+                                styles.progressFill,
+                                { width: `${(testProgress / totalTests) * 100}%` }
+                            ]}
+                        />
+                    </View>
+                    <Text style={styles.progressText}>
+                        {testProgress}/{totalTests} - {currentTest}
+                    </Text>
+                </View>
+            )}
 
             {/* Test Buttons */}
             <View style={styles.buttonContainer}>
@@ -241,6 +273,36 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginBottom: 5,
         fontFamily: 'monospace',
+    },
+    progressContainer: {
+        backgroundColor: '#16213e',
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 20,
+    },
+    progressTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#e94560',
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    progressBar: {
+        height: 8,
+        backgroundColor: '#0f3460',
+        borderRadius: 4,
+        marginBottom: 10,
+        overflow: 'hidden',
+    },
+    progressFill: {
+        height: '100%',
+        backgroundColor: '#4ade80',
+        borderRadius: 4,
+    },
+    progressText: {
+        color: '#ffffff',
+        fontSize: 14,
+        textAlign: 'center',
     },
 });
 

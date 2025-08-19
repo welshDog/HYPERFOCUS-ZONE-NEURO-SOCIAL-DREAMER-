@@ -235,7 +235,7 @@ export const FocusTimer: React.FC<FocusTimerProps> = ({
     return (
         <View style={[styles.container, { backgroundColor: colors.surface }]}>
             <View style={styles.header}>
-                <Text style={[styles.sessionType, { color: colors.text, ...typography.headline }]}>
+                <Text style={[styles.sessionType, { color: colors.text }, typography.headline]}>
                     {sessionType === 'focus' ? '🧠 Focus Session' : '🌱 Break Time'}
                 </Text>
                 <Text style={[styles.sessionDescription, { color: colors.textSecondary, ...typography.body }]}>
@@ -277,10 +277,10 @@ export const FocusTimer: React.FC<FocusTimerProps> = ({
                 </Svg>
 
                 <View style={styles.timerContent}>
-                    <Text style={[styles.timeDisplay, { color: colors.text, ...typography.display }]}>
+                    <Text style={[styles.timeDisplay, { color: colors.text }, typography.display]}>
                         {formatTime(timeLeft)}
                     </Text>
-                    <Text style={[styles.timeLabel, { color: colors.textSecondary, ...typography.caption }]}>
+                    <Text style={[styles.timeLabel, { color: colors.textSecondary }, typography.caption]}>
                         {sessionType === 'focus' ? 'Focus Time' : 'Break Time'}
                     </Text>
                 </View>
@@ -443,3 +443,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
+
+export default FocusTimer;

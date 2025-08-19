@@ -10,6 +10,7 @@ export interface Theme {
     background: string;
     surface: string;
     primary: string;
+    onPrimary: string; // Add missing color for text on primary
     secondary: string;
     text: string;
     textSecondary: string;
@@ -24,6 +25,7 @@ const lightTheme: Theme = {
     background: '#f8f9fa',
     surface: '#ffffff',
     primary: '#6c5ce7',
+    onPrimary: '#ffffff',
     secondary: '#00b894',
     text: '#2d3436',
     textSecondary: '#636e72',
@@ -38,6 +40,7 @@ const darkTheme: Theme = {
     background: '#1a1a2e',
     surface: '#16213e',
     primary: '#6c5ce7',
+    onPrimary: '#ffffff',
     secondary: '#00b894',
     text: '#ffffff',
     textSecondary: '#b2bec3',
@@ -52,6 +55,7 @@ const highContrastTheme: Theme = {
     background: '#000000',
     surface: '#1a1a1a',
     primary: '#00ff00',
+    onPrimary: '#000000',
     secondary: '#00ffff',
     text: '#ffffff',
     textSecondary: '#cccccc',
@@ -193,12 +197,12 @@ export const useTheme = () => {
     return {
         colors: context.theme,
         typography: {
-            display: { fontSize: context.fontSize + 8, fontWeight: 'bold' },
-            title: { fontSize: context.fontSize + 4, fontWeight: 'bold' },
-            headline: { fontSize: context.fontSize + 2, fontWeight: '600' },
-            subtitle: { fontSize: context.fontSize, fontWeight: '600' },
-            body: { fontSize: context.fontSize },
-            caption: { fontSize: context.fontSize - 2 },
+            display: { fontSize: context.fontSize + 8, fontWeight: 'bold' as const },
+            title: { fontSize: context.fontSize + 4, fontWeight: 'bold' as const },
+            headline: { fontSize: context.fontSize + 2, fontWeight: '600' as const },
+            subtitle: { fontSize: context.fontSize, fontWeight: '600' as const },
+            body: { fontSize: context.fontSize, fontWeight: 'normal' as const },
+            caption: { fontSize: context.fontSize - 2, fontWeight: 'normal' as const },
         },
         isDark: context.isDark,
         isHighContrast: context.isHighContrast,

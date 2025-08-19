@@ -18,7 +18,7 @@ export interface AccessibilityContextType {
     announceToScreenReader: (message: string) => void;
     // Additional properties expected by components
     announceForScreenReader: (message: string) => void;
-    preferredDuration?: number;
+    preferredDuration?: { focus: number; break: number };
 }
 
 export const AccessibilityContext = createContext<AccessibilityContextType>({
@@ -31,6 +31,8 @@ export const AccessibilityContext = createContext<AccessibilityContextType>({
     setHighContrast: () => { },
     voiceOverEnabled: false,
     announceToScreenReader: () => { },
+    announceForScreenReader: () => { }, // Add missing default
+    preferredDuration: { focus: 25, break: 5 }, // Add missing default
 });
 
 interface AccessibilityProviderProps {
@@ -147,7 +149,7 @@ export const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({
         voiceOverEnabled,
         announceToScreenReader,
         announceForScreenReader: announceToScreenReader, // Alias for consistency
-        preferredDuration: 25, // Default 25 minutes for Pomodoro
+        preferredDuration: { focus: 25, break: 5 }, // Default Pomodoro settings
     };
 
     return (

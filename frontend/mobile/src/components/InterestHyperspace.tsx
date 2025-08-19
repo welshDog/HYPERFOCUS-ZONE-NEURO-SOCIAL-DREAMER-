@@ -46,7 +46,7 @@ interface Post {
     spaceId: string;
 }
 
-export const InterestHyperspace: React.FC = () => {
+const InterestHyperspace: React.FC = () => {
     const { colors, typography } = useTheme();
     const { announceForScreenReader } = useAccessibility();
 
@@ -198,11 +198,11 @@ export const InterestHyperspace: React.FC = () => {
                 </View>
             </View>
 
-            <Text style={[styles.spaceTitle, { color: colors.text, ...typography.subtitle }]}>
+            <Text style={[styles.spaceTitle, { color: colors.text }, typography.subtitle]}>
                 {item.title}
             </Text>
 
-            <Text style={[styles.spaceDescription, { color: colors.textSecondary, ...typography.caption }]}>
+            <Text style={[styles.spaceDescription, { color: colors.textSecondary }, typography.caption]}>
                 {item.description}
             </Text>
 
@@ -257,7 +257,7 @@ export const InterestHyperspace: React.FC = () => {
     const renderPost = ({ item }: { item: Post }) => (
         <View style={[styles.postCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             <View style={styles.postHeader}>
-                <Text style={[styles.postAuthor, { color: colors.text, ...typography.subtitle }]}>
+                <Text style={[styles.postAuthor, { color: colors.text }, typography.subtitle]}>
                     @{item.author}
                 </Text>
                 <Text style={[styles.postTime, { color: colors.textSecondary }]}>
@@ -265,7 +265,7 @@ export const InterestHyperspace: React.FC = () => {
                 </Text>
             </View>
 
-            <Text style={[styles.postContent, { color: colors.text, ...typography.body }]}>
+            <Text style={[styles.postContent, { color: colors.text }, typography.body]}>
                 {item.content}
             </Text>
 
@@ -327,10 +327,10 @@ export const InterestHyperspace: React.FC = () => {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
-                <Text style={[styles.headerTitle, { color: colors.text, ...typography.title }]}>
+                <Text style={[styles.headerTitle, { color: colors.text }, typography.title]}>
                     ⚡ Interest Hyperspaces
                 </Text>
-                <Text style={[styles.headerSubtitle, { color: colors.textSecondary, ...typography.caption }]}>
+                <Text style={[styles.headerSubtitle, { color: colors.textSecondary }, typography.caption]}>
                     Deep-dive communities for your special interests
                 </Text>
             </View>
@@ -416,10 +416,10 @@ export const InterestHyperspace: React.FC = () => {
 
             {viewMode === 'create' && (
                 <View style={styles.createContainer}>
-                    <Text style={[styles.createTitle, { color: colors.text, ...typography.headline }]}>
+                    <Text style={[styles.createTitle, { color: colors.text }, typography.headline]}>
                         🚀 Create Your Hyperspace
                     </Text>
-                    <Text style={[styles.createDescription, { color: colors.textSecondary, ...typography.body }]}>
+                    <Text style={[styles.createDescription, { color: colors.textSecondary }, typography.body]}>
                         Start a community around your special interest or passion project
                     </Text>
 
@@ -662,3 +662,5 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
 });
+
+export default InterestHyperspace;

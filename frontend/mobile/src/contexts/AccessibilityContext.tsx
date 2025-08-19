@@ -16,6 +16,9 @@ export interface AccessibilityContextType {
     setHighContrast: (enabled: boolean) => void;
     voiceOverEnabled: boolean;
     announceToScreenReader: (message: string) => void;
+    // Additional properties expected by components
+    announceForScreenReader: (message: string) => void;
+    preferredDuration?: number;
 }
 
 export const AccessibilityContext = createContext<AccessibilityContextType>({
@@ -143,6 +146,8 @@ export const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({
         setHighContrast: updateHighContrast,
         voiceOverEnabled,
         announceToScreenReader,
+        announceForScreenReader: announceToScreenReader, // Alias for consistency
+        preferredDuration: 25, // Default 25 minutes for Pomodoro
     };
 
     return (

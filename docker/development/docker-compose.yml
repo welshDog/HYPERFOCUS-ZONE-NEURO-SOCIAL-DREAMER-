@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: ../../api-gateway
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DREAMER_API_PORT_5001=5001
+      - DREAMER_API_PORT_5002=5002
+      - DREAMER_API_PORT_5003=5003
+      - AI_AGENTS_PORT=8888
+      - MEMORY_CRYSTALS_PORT=9000
+      - BROSKI_ECONOMY_PORT=7000
+      - HEALTH_MONITOR_PORT=6000
+    volumes:
+      - ../../api-gateway:/app
+      - /app/node_modules
+    command: npm run dev
+
+  web-app:
+    build:
+      context: ../../frontend/web
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    volumes:
+      - ../../frontend/web:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=hyperfocus_zone_neuro
+      - POSTGRES_USER=hyperfocus_user
+      - POSTGRES_PASSWORD=secure_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,35 @@
+{
+  "name": "hyperfocus-zone-neuro-social-dreamer",
+  "version": "1.0.0",
+  "description": "The world's first neurodivergent-focused social platform",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "cd frontend/web && npm run dev",
+    "dev:mobile": "cd frontend/mobile && npx react-native start",
+    "build": "npm run build:web && npm run build:mobile",
+    "build:web": "cd frontend/web && npm run build",
+    "build:mobile": "cd frontend/mobile && npx react-native bundle",
+    "test": "npm run test:web && npm run test:mobile",
+    "test:web": "cd frontend/web && npm test",
+    "test:mobile": "cd frontend/mobile && npm test",
+    "docker:dev": "docker-compose -f docker/development/docker-compose.yml up",
+    "docker:staging": "docker-compose -f docker/staging/docker-compose.yml up",
+    "docker:prod": "docker-compose -f docker/production/docker-compose.yml up"
+  },
+  "keywords": [
+    "neurodivergent",
+    "adhd",
+    "social-platform",
+    "accessibility",
+    "react-native",
+    "nextjs",
+    "hyperfocus"
+  ],
+  "author": "HyperFocus Zone Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/welshDog/HYPERFOCUS-ZONE-NEURO-SOCIAL-DREAMER.git"
+  }
+}

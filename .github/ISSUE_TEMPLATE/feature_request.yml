@@ -1,0 +1,163 @@
+name: Feature Request
+description: Suggest a new feature for the neurodivergent community
+title: "[FEATURE] "
+labels: ["enhancement", "needs-discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Your ideas help us build a better platform for the neurodivergent community.
+
+        We especially value suggestions that improve accessibility, support ADHD/autism needs, or enhance the social experience for neurodivergent users.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      description: Please check all items before submitting
+      options:
+        - label: I searched existing issues to make sure this hasn't been suggested before
+          required: true
+        - label: This feature would benefit the neurodivergent community
+          required: true
+        - label: I've considered how this feature could impact accessibility
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What type of feature is this?
+      options:
+        - ADHD Support (focus tools, hyperfocus features, attention management)
+        - Accessibility (screen readers, keyboard navigation, visual accommodations)
+        - Autism Support (sensory considerations, routine support, social features)
+        - Community Features (social interaction, peer support, safe spaces)
+        - AI/Automation (smart assistance, personalized recommendations)
+        - User Interface (design improvements, customization options)
+        - Performance (speed, optimization, resource usage)
+        - Security/Privacy (data protection, user safety)
+        - Documentation/Help (guides, tutorials, onboarding)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you and the community?
+      options:
+        - Critical - Essential for platform usability
+        - High - Would significantly improve user experience
+        - Medium - Nice to have, would enhance platform
+        - Low - Minor improvement or convenience feature
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What need does it address?
+      placeholder: "As a neurodivergent user, I struggle with... / The current platform doesn't support... / It's difficult to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your idea for solving this problem
+      placeholder: "I would like to see... / This could be solved by... / The feature should..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: neurodivergent_impact
+    attributes:
+      label: Neurodivergent Community Impact
+      description: How would this feature specifically help neurodivergent users?
+      placeholder: "This would help people with ADHD by... / Users with autism would benefit because... / This addresses sensory needs by..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility Considerations
+      description: How should this feature work with screen readers, keyboard navigation, and other accessibility tools?
+      placeholder: "This feature should be keyboard accessible by... / Screen readers should announce... / Visual indicators should..."
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: What other ways could this problem be solved? Have you considered any alternatives?
+      placeholder: "Instead of this, we could... / Other platforms solve this by... / A simpler approach might be..."
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or Mockups
+      description: Do you have any examples, mockups, or references from other apps/websites?
+      placeholder: "Similar to how [app/website] does... / Here's a rough sketch... / You can see an example at..."
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Areas
+      description: Which parts of the platform would this feature affect? (check all that apply)
+      options:
+        - label: Mobile App (React Native)
+          required: false
+        - label: Web App (Next.js)
+          required: false
+        - label: API/Backend Services
+          required: false
+        - label: AI Agent Integration
+          required: false
+        - label: Database/Data Storage
+          required: false
+        - label: User Interface Design
+          required: false
+        - label: Documentation
+          required: false
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Estimated Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple - Could be built in a day or two
+        - Moderate - Might take a week or two
+        - Complex - Could take several weeks
+        - Very Complex - Might take months
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information, research, or context that would be helpful
+      placeholder: "I found some research showing... / This is inspired by... / Related to this, I also think..."
+
+  - type: checkboxes
+    id: involvement
+    attributes:
+      label: Community Involvement
+      description: How would you like to be involved in developing this feature?
+      options:
+        - label: I'd like to help design this feature
+          required: false
+        - label: I can help with user testing and feedback
+          required: false
+        - label: I might be able to contribute code
+          required: false
+        - label: I can help with documentation or tutorials
+          required: false
+        - label: I'd like to advocate for this in the community
+          required: false

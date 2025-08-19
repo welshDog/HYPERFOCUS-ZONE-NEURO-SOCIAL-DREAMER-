@@ -1,0 +1,164 @@
+name: Bug Report
+description: Report a bug to help us improve the platform
+title: "[BUG] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a bug! This helps us make the platform better for everyone in the neurodivergent community.
+
+        **Note**: If this is a security vulnerability, please email security@hyperfocuszone.com instead of creating a public issue.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      description: Please check all items before submitting
+      options:
+        - label: I searched existing issues to make sure this hasn't been reported before
+          required: true
+        - label: I can reproduce this bug consistently
+          required: true
+        - label: This affects the accessibility or usability of the platform
+          required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area Affected
+      description: Which part of the platform is affected?
+      options:
+        - Mobile App (React Native)
+        - Web App (Next.js)
+        - API Gateway
+        - Accessibility Features
+        - ADHD-Specific Features
+        - Community Features
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Impact Level
+      description: How severely does this affect your ability to use the platform?
+      options:
+        - Critical - Cannot use the platform at all
+        - High - Major feature is broken, significant workaround needed
+        - Medium - Feature is partially broken, minor workaround available
+        - Low - Minor issue, doesn't significantly impact usage
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: "When I try to [action], [unexpected behavior] happens instead of [expected behavior]"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the bug
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+      placeholder: "I expected..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: "Instead, what happened was..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility Impact
+      description: Does this bug affect accessibility features? (screen readers, keyboard navigation, color contrast, etc.)
+      placeholder: "This bug affects... (leave blank if not applicable)"
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots/Videos
+      description: If applicable, add screenshots or videos to help explain the problem
+      placeholder: "Drag and drop images/videos here or paste links"
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser (if web-related)
+      description: Which browser are you using?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+        - Not applicable (mobile app)
+
+  - type: dropdown
+    id: mobile
+    attributes:
+      label: Mobile Platform (if mobile-related)
+      description: Which mobile platform?
+      options:
+        - iOS
+        - Android
+        - Not applicable (web app)
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: |
+        Operating System, Browser version, Mobile device model, etc.
+        You can get this from your browser's developer tools or device settings
+      placeholder: |
+        - OS: [e.g., Windows 11, macOS 13, iOS 16]
+        - Browser: [e.g., Chrome 119]
+        - Device: [e.g., iPhone 14, Samsung Galaxy S23]
+        - Screen reader: [e.g., NVDA, VoiceOver, if applicable]
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information that might be helpful
+      placeholder: "This started happening after... / This might be related to... / I noticed that..."
+
+  - type: checkboxes
+    id: assistance
+    attributes:
+      label: Community Support
+      description: How would you like to be involved in fixing this bug?
+      options:
+        - label: I'd like to help fix this bug if possible
+          required: false
+        - label: I can provide additional testing/feedback
+          required: false
+        - label: I'm available for follow-up questions
+          required: false

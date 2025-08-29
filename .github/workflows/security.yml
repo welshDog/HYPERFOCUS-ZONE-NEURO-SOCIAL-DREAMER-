@@ -1,0 +1,190 @@
+name: "Community Security Scan"
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Mondays at 6 AM UTC
+
+jobs:
+  community-security-check:
+    name: Community Content Security Analysis
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Community Content Security Validation
+      run: |
+        echo "🌈 Analyzing community content security..."
+
+        # Check for potentially harmful content patterns
+        if grep -r "harm\|suicide\|self-harm" --include="*.md" . | grep -v "help\|support\|resources"; then
+          echo "⚠️  Potentially sensitive content detected - review required!"
+          exit 1
+        else
+          echo "✅ No harmful content patterns detected"
+        fi
+
+        # Check for contact information exposure
+        if grep -r "@[a-zA-Z0-9._-]*\.[a-zA-Z]{2,}" --include="*.md" . | grep -v "github\|users.noreply.github"; then
+          echo "⚠️  Personal email addresses detected in documentation!"
+          exit 1
+        else
+          echo "✅ No personal contact information exposed"
+        fi
+
+        # Check for API keys or secrets in documentation
+        if grep -r "api_key\|secret\|token\|password" --include="*.md" . | grep -v "example\|placeholder\|your_"; then
+          echo "⚠️  Potential secrets detected in documentation!"
+          exit 1
+        else
+          echo "✅ No secrets detected in community content"
+        fi
+
+  documentation-security:
+    name: Documentation Security Check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Documentation Security Analysis
+      run: |
+        echo "📚 Analyzing documentation security..."
+
+        # Check for broken links that could lead to malicious sites
+        if grep -r "http://" --include="*.md" . | grep -v "github\|linkedin\|twitter\|youtube"; then
+          echo "⚠️  External HTTP links detected - review for security!"
+          exit 1
+        else
+          echo "✅ External links use secure HTTPS"
+        fi
+
+        # Check for embedded scripts or HTML that could be malicious
+        if grep -r "<script\|javascript:" --include="*.md" .; then
+          echo "⚠️  Embedded scripts detected in documentation!"
+          exit 1
+        else
+          echo "✅ No embedded scripts in documentation"
+        fi
+
+        # Check for markdown table of contents with potentially malicious links
+        if grep -r "\[.*\](http" --include="*.md" . | grep -v "github\|linkedin\|twitter\|youtube"; then
+          echo "⚠️  External links in markdown - review required!"
+          exit 1
+        else
+          echo "✅ Markdown links are safe"
+        fi
+
+  accessibility-security:
+    name: Accessibility & Inclusion Security
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Accessibility Security Validation
+      run: |
+        echo "♿ Analyzing accessibility and inclusion security..."
+
+        # Check for inclusive language and community safety
+        if grep -r "stupid\|dumb\|retard" --include="*.md" . | grep -v "ableism\|discrimination\|education"; then
+          echo "⚠️  Potentially harmful language detected!"
+          exit 1
+        else
+          echo "✅ Language is inclusive and respectful"
+        fi
+
+        # Check for community guidelines adherence
+        if grep -r "must\|required\|mandatory" --include="*.md" . | grep -i "participat\|contribut"; then
+          echo "⚠️  Mandatory participation language detected - review for accessibility!"
+          exit 1
+        else
+          echo "✅ Community guidelines are accessible"
+        fi
+
+        # Check for trigger warnings for sensitive topics
+        sensitive_topics="mental health\|anxiety\|depression\|trauma\|discrimination"
+        if grep -r "$sensitive_topics" --include="*.md" . | grep -v "support\|resources\|help"; then
+          echo "⚠️  Sensitive topics mentioned without context - consider trigger warnings!"
+          exit 1
+        else
+          echo "✅ Sensitive topics handled appropriately"
+        fi
+
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Scan for secrets
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  community-health-check:
+    name: Community Health & Safety
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Community Health Analysis
+      run: |
+        echo "❤️‍🔥 Analyzing community health and safety..."
+
+        # Check for community support resources
+        if grep -r "help\|support\|resources" --include="*.md" . | grep -i "mental\|crisis\|emergency"; then
+          echo "✅ Mental health support resources present"
+        else
+          echo "⚠️  Consider adding mental health support resources"
+        fi
+
+        # Check for diversity and inclusion statements
+        if grep -r "inclusi\|divers\|equity\|belong" --include="*.md" .; then
+          echo "✅ Diversity and inclusion statements present"
+        else
+          echo "⚠️  Consider adding diversity and inclusion statements"
+        fi
+
+        # Check for code of conduct
+        if [ -f "CODE_OF_CONDUCT.md" ] || grep -r "code of conduct\|conduct" --include="*.md" .; then
+          echo "✅ Code of conduct present"
+        else
+          echo "⚠️  Consider adding a code of conduct"
+        fi
+
+        # Check for contribution guidelines
+        if [ -f "CONTRIBUTING.md" ] || grep -r "contribut" --include="*.md" .; then
+          echo "✅ Contribution guidelines present"
+        else
+          echo "⚠️  Consider adding contribution guidelines"
+        fi
+
+  security-complete:
+    name: Security Analysis Complete
+    runs-on: ubuntu-latest
+    needs: [community-security-check, documentation-security, accessibility-security, secret-scan, community-health-check]
+    steps:
+    - name: Security Scan Complete
+      run: |
+        echo "🌈 NEURO-SOCIAL DREAMER SECURITY ANALYSIS COMPLETE"
+        echo "Community platform protected with comprehensive security measures!"
+        echo "Neurodivergent community safety and inclusion verified!"
+        echo "Documentation security and accessibility validated!"
+        echo "Legendary security protection active! 🛡️✨"

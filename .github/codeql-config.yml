@@ -1,0 +1,43 @@
+name: "CodeQL Configuration"
+
+disable-default-queries: false
+
+queries:
+  - uses: security-and-quality
+  - uses: security-experimental
+
+paths-ignore:
+  - node_modules
+  - .git
+  - "**/*.md"
+  - "**/*.txt"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/*.json"
+  - "**/*.lock"
+  - "**/*.svg"
+  - "**/*.png"
+  - "**/*.jpg"
+  - "**/*.jpeg"
+  - "**/*.gif"
+  - "**/*.ico"
+  - "**/*.woff"
+  - "**/*.woff2"
+  - "**/*.ttf"
+  - "**/*.eot"
+  - ".github/ISSUE_TEMPLATE/"
+  - ".github/PULL_REQUEST_TEMPLATE.md"
+  - "LICENSE"
+  - "CONTRIBUTING.md"
+  - "**/node_modules/"
+  - "**/.git/"
+  - "**/dist/"
+  - "**/build/"
+
+paths:
+  - "**/*.js"
+  - "**/*.ts"
+  - "**/*.jsx"
+  - "**/*.tsx"
+  - "**/*.py"
+  - "**/*.ipynb"
